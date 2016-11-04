@@ -207,4 +207,15 @@ public class UsuarioJpaController implements Serializable {
         }
     }
     
+    public Usuario findNome(String nome) {
+        EntityManager em = getEntityManager();
+        try {
+             return em.createNamedQuery("Usuario.findByNome",Usuario.class).setParameter("nome", nome).getSingleResult();
+        }catch(Exception e){
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
 }

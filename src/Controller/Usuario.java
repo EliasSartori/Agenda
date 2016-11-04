@@ -5,18 +5,24 @@
  */
 package Controller;
 
+import DAO.UsuarioJpaController;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.swing.JOptionPane;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,8 +40,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByNome", query = "SELECT u FROM Usuario u WHERE u.nome = :nome"),
     @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")})
 public class Usuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Long id;
@@ -118,5 +126,86 @@ public class Usuario implements Serializable {
     public String toString() {
         return "Controller.Usuario[ id=" + id + " ]";
     }
-    
+
+    public boolean armazenado() {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
+            UsuarioJpaController usuarioJpaController = new UsuarioJpaController(emf);
+            usuarioJpaController.create(this);
+            JOptionPane.showMessageDialog(null, "Usuário incluído");
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getCause());
+            return false;
+        }
+    }
+
+    public boolean atualizado() {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
+            UsuarioJpaController usuarioJpaController = new UsuarioJpaController(emf);
+            usuarioJpaController.edit(this);
+            JOptionPane.showMessageDialog(null, "Usuário atualizado");
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getCause());
+            return false;
+        }
+    }
+
+    public boolean desarmazenado() {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
+            UsuarioJpaController usuarioJpaController = new UsuarioJpaController(emf);
+            usuarioJpaController.destroy(this.getId());
+            JOptionPane.showMessageDialog(null, "Usuário excluído");
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getCause());
+            return false;
+        }
+    }
+
+    public boolean encontradoId(Long id) {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
+            UsuarioJpaController usuarioJpaController = new UsuarioJpaController(emf);
+            Usuario usuarioAux = usuarioJpaController.findUsuario(id);
+            if (usuarioAux != null) {
+                this.setId(usuarioAux.getId());
+                this.setNome(usuarioAux.getNome());
+                this.setSenha(usuarioAux.getSenha());
+                this.setTarefaCollection(usuarioAux.getTarefaCollection());
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário não encontrado");
+                return false;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getCause());
+            return false;
+        }
+    }
+
+    public Usuario encontradoNome(String nome) {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
+            UsuarioJpaController usuarioJpaController = new UsuarioJpaController(emf);
+            Usuario usuarioAux = (Usuario) usuarioJpaController.findNome(nome);
+            if (usuarioAux != null) {
+                this.setId(usuarioAux.getId());
+                this.setNome(usuarioAux.getNome());
+                this.setSenha(usuarioAux.getSenha());
+                this.setTarefaCollection(usuarioAux.getTarefaCollection());
+                return usuarioAux;
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário não encontrado");
+                return null;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
+    }
+
 }

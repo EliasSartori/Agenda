@@ -5,19 +5,25 @@
  */
 package Controller;
 
+import DAO.TarefaJpaController;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.swing.JOptionPane;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,8 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Tarefa.findByData", query = "SELECT t FROM Tarefa t WHERE t.data = :data"),
     @NamedQuery(name = "Tarefa.findByDescricao", query = "SELECT t FROM Tarefa t WHERE t.descricao = :descricao")})
 public class Tarefa implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     @Column(name = "ID", nullable = false)
     private Long id;
@@ -118,5 +126,65 @@ public class Tarefa implements Serializable {
     public String toString() {
         return "Controller.Tarefa[ id=" + id + " ]";
     }
-    
+
+    public boolean armazenado() {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
+            TarefaJpaController tarefaJpaController = new TarefaJpaController(emf);
+            tarefaJpaController.create(this);
+            JOptionPane.showMessageDialog(null, "Tarefa incluida");
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getCause());
+            return false;
+        }
+    }
+
+    public boolean atualizado() {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
+            TarefaJpaController tarefaJpaController = new TarefaJpaController(emf);
+            tarefaJpaController.edit(this);
+            JOptionPane.showMessageDialog(null, "Tarefa atualizado");
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getCause());
+            return false;
+        }
+    }
+
+    public boolean desarmazenado() {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
+            TarefaJpaController tarefaJpaController = new TarefaJpaController(emf);
+            tarefaJpaController.destroy(this.getId());
+            JOptionPane.showMessageDialog(null, "Tarefa excluida");
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getCause());
+            return false;
+        }
+    }
+
+    public boolean encontradoId(Long id) {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
+            TarefaJpaController tarefaJpaController = new TarefaJpaController(emf);
+            Tarefa tarefaAux = tarefaJpaController.findTarefa(id);
+            if (tarefaAux != null) {
+                this.setId(tarefaAux.getId());
+                this.setDescricao(tarefaAux.getDescricao());
+                this.setData(tarefaAux.getData());
+                this.setIdUsuario(tarefaAux.getIdUsuario());
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Tarefa não encontrada");
+                return false;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getCause());
+            return false;
+        }
+    }
+
 }
