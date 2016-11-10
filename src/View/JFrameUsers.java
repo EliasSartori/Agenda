@@ -52,6 +52,11 @@ public class JFrameUsers extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Usuários");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, usuarioList, jTableUsers);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
@@ -99,6 +104,12 @@ public class JFrameUsers extends javax.swing.JFrame {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableUsers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.senha}"), jPasswordFieldSenha, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
+        jPasswordFieldSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordFieldSenhaKeyPressed(evt);
+            }
+        });
+
         jPasswordFieldConSenha.setText("jPasswordField1");
 
         jButtonSalvar.setText("Salvar");
@@ -130,6 +141,11 @@ public class JFrameUsers extends javax.swing.JFrame {
         });
 
         jButtonVerTarefas.setText("Ver Tarefas");
+        jButtonVerTarefas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVerTarefasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -209,6 +225,19 @@ public class JFrameUsers extends javax.swing.JFrame {
 
     private void jTextFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeActionPerformed
         // TODO add your handling code here:
+        this.jButtonInserir.setEnabled(false);
+        this.jButtonExcluir.setEnabled(false);
+        this.jButtonCancelar.setEnabled(true);
+        this.jButtonSalvar.setEnabled(true);
+        this.jButtonVerTarefas.setEnabled(this.jTableUsers.getRowCount() != 0);
+ 
+        if (this.estado == Estado.CONSULTANDO) {
+            if (this.jTableUsers.getRowCount() != 0) {
+                this.estado = Estado.EDITANDO;
+            } else {
+                this.jButtonInserirActionPerformed(null);
+            }
+        }
     }//GEN-LAST:event_jTextFieldNomeActionPerformed
 
     private void jButtonInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserirActionPerformed
@@ -352,6 +381,42 @@ public class JFrameUsers extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        if (this.jTableUsers.getRowCount() > 0) { // Se houver linhas na lista
+            this.jTableUsers.setRowSelectionInterval(0, 0); // Seleciona linha 0
+        }
+ 
+        // Configura botões 
+        this.jButtonInserir.setEnabled(true);
+        this.jButtonExcluir.setEnabled(this.jTableUsers.getRowCount() != 0);
+        this.jButtonCancelar.setEnabled(false);
+        this.jButtonSalvar.setEnabled(false);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jButtonVerTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerTarefasActionPerformed
+        // TODO add your handling code here:
+        // Busca usuário e passa-o para janela de tarefas
+        Usuario usuario = new Usuario(); 
+        usuario.encontradoId(Long.valueOf(this.jTextFieldId.getText()));
+        
+        JFrameTarefas jFrameTarefas = new JFrameTarefas(usuario);
+        jFrameTarefas.setLocationRelativeTo(null); // Janela no centro
+        
+        jFrameTarefas.setVisible(true);
+    }//GEN-LAST:event_jButtonVerTarefasActionPerformed
+
+    private void jPasswordFieldSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordFieldSenhaKeyPressed
+        // TODO add your handling code here:
+        Usuario usuario = new Usuario(); 
+        usuario.encontradoId(Long.valueOf(this.jTextFieldId.getText()));
+        
+        JFrameTarefas jFrameTarefas = new JFrameTarefas(usuario);
+        jFrameTarefas.setLocationRelativeTo(null); // Janela no centro
+        
+        jFrameTarefas.setVisible(true);
+    }//GEN-LAST:event_jPasswordFieldSenhaKeyPressed
 
     /**
      * @param args the command line arguments

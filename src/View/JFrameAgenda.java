@@ -5,6 +5,8 @@
  */
 package View;
 
+import Controller.Usuario;
+
 /**
  *
  * @author gabriel
@@ -27,7 +29,34 @@ public class JFrameAgenda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItemUsuarios = new javax.swing.JMenuItem();
+        jMenuItemTarefas = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jMenu1.setText("Arquivos");
+
+        jMenuItemUsuarios.setText("Usuários");
+        jMenuItemUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemUsuariosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemUsuarios);
+
+        jMenuItemTarefas.setText("Tarefas");
+        jMenuItemTarefas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTarefasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemTarefas);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -37,11 +66,25 @@ public class JFrameAgenda extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 279, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItemUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUsuariosActionPerformed
+        // TODO add your handling code here:
+        JFrameUsers jFrameUsuarios = new JFrameUsers();
+        jFrameUsuarios.setLocationRelativeTo(null);
+        jFrameUsuarios.setVisible(true);
+    }//GEN-LAST:event_jMenuItemUsuariosActionPerformed
+
+    private void jMenuItemTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTarefasActionPerformed
+        // TODO add your handling code here:
+        JFrameTarefas jFrameTarefas = new JFrameTarefas(usuario);
+        jFrameTarefas.setLocationRelativeTo(null); // Janela no centro
+        jFrameTarefas.setVisible(true);
+    }//GEN-LAST:event_jMenuItemTarefasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,6 +121,27 @@ public class JFrameAgenda extends javax.swing.JFrame {
         });
     }
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {
+
+        this.setTitle("Agenda - " + this.getUsuario().getNome());
+        this.jMenuItemUsuarios.setEnabled(this.getUsuario().getNome().equalsIgnoreCase("Admin"));
+     
+    }
+
+    private Usuario usuario;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemTarefas;
+    private javax.swing.JMenuItem jMenuItemUsuarios;
     // End of variables declaration//GEN-END:variables
 }

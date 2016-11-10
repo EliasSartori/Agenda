@@ -26,12 +26,12 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabelLogin" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
-                  <Component id="jTextLogin" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
-                  <Component id="jPasswordSenha" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonEntre" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
-                  <Component id="jLabelSenha" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jLabelLogin" alignment="0" pref="115" max="32767" attributes="0"/>
+                  <Component id="jTextFieldLogin" alignment="0" pref="115" max="32767" attributes="0"/>
+                  <Component id="jButtonEntre" alignment="0" pref="115" max="32767" attributes="0"/>
+                  <Component id="jLabelSenha" alignment="0" pref="115" max="32767" attributes="0"/>
+                  <Component id="jPasswordSenha" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="143" max="32767" attributes="0"/>
           </Group>
@@ -43,7 +43,7 @@
               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
               <Component id="jLabelLogin" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jTextLogin" min="-2" max="-2" attributes="0"/>
+              <Component id="jTextFieldLogin" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabelSenha" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -66,20 +66,20 @@
         <Property name="text" type="java.lang.String" value="Senha"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextLogin">
+    <Component class="javax.swing.JTextField" name="jTextFieldLogin">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextLoginActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldLoginActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="jPasswordSenha">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonEntre">
       <Properties>
         <Property name="text" type="java.lang.String" value="Entre"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEntreActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

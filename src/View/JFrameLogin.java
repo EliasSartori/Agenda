@@ -5,6 +5,9 @@
  */
 package View;
 
+import Controller.Usuario;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author gabriel
@@ -29,7 +32,7 @@ public class JFrameLogin extends javax.swing.JFrame {
 
         jLabelLogin = new javax.swing.JLabel();
         jLabelSenha = new javax.swing.JLabel();
-        jTextLogin = new javax.swing.JTextField();
+        jTextFieldLogin = new javax.swing.JTextField();
         jPasswordSenha = new javax.swing.JPasswordField();
         jButtonEntre = new javax.swing.JButton();
 
@@ -40,15 +43,18 @@ public class JFrameLogin extends javax.swing.JFrame {
 
         jLabelSenha.setText("Senha");
 
-        jTextLogin.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextLoginActionPerformed(evt);
+                jTextFieldLoginActionPerformed(evt);
             }
         });
 
-        jPasswordSenha.setText("jPasswordField1");
-
         jButtonEntre.setText("Entre");
+        jButtonEntre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEntreActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -56,12 +62,12 @@ public class JFrameLogin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(142, 142, 142)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonEntre, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                    .addComponent(jTextFieldLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                    .addComponent(jButtonEntre, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                    .addComponent(jLabelSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                    .addComponent(jPasswordSenha))
                 .addContainerGap(143, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -70,7 +76,7 @@ public class JFrameLogin extends javax.swing.JFrame {
                 .addGap(65, 65, 65)
                 .addComponent(jLabelLogin)
                 .addGap(18, 18, 18)
-                .addComponent(jTextLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelSenha)
                 .addGap(18, 18, 18)
@@ -83,9 +89,28 @@ public class JFrameLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextLoginActionPerformed
+    private void jTextFieldLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldLoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextLoginActionPerformed
+    }//GEN-LAST:event_jTextFieldLoginActionPerformed
+
+    private void jButtonEntreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntreActionPerformed
+        // TODO add your handling code here:
+        if (this.validoLogin()) {
+            this.dispose();
+            JFrameAgenda jFrameAgenda = new JFrameAgenda();
+            jFrameAgenda.setUsuario(this.usuario);
+            jFrameAgenda.setLocationRelativeTo(null);
+            jFrameAgenda.setVisible(true);
+        } else {
+            this.contadorTentativas++;
+            JOptionPane.showMessageDialog(rootPane, "Senha errada");
+        }
+
+        if (this.contadorTentativas > 3) {
+            JOptionPane.showMessageDialog(rootPane, "Erro inicie novamente");
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButtonEntreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,11 +147,37 @@ public class JFrameLogin extends javax.swing.JFrame {
         });
     }
 
+    public boolean validoLogin() {
+        Usuario usuario = new Usuario();
+        this.usuario = usuario.encontradoNome("admin"); // Cria o usuário
+        if (this.usuario == null) { // Se não encontrado o usuário admin
+            usuario.setNome("Admin"); // Configura o nome (não pode ser duplicado)
+            usuario.setSenha("abcde"); // Configura uma senha
+            if (!usuario.armazenado()) { // Cria um usuário administrador 
+                JOptionPane.showMessageDialog(rootPane, "Não foi possível criar usuário administrador");
+            }
+        }
+        this.usuario = usuario.encontradoNome(this.jTextFieldLogin.getText());
+        return this.jTextFieldLogin.getText().equalsIgnoreCase(this.usuario.getNome()) && this.jPasswordSenha.getText().equals(this.usuario.getSenha());
+    }
+
+    private int contadorTentativas = 1;
+
+    private Usuario usuario;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEntre;
     private javax.swing.JLabel jLabelLogin;
     private javax.swing.JLabel jLabelSenha;
     private javax.swing.JPasswordField jPasswordSenha;
-    private javax.swing.JTextField jTextLogin;
+    private javax.swing.JTextField jTextFieldLogin;
     // End of variables declaration//GEN-END:variables
 }
