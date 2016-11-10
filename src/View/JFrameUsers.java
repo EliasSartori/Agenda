@@ -5,6 +5,9 @@
  */
 package View;
 
+import Controller.Usuario;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author gabriel
@@ -37,10 +40,10 @@ public class JFrameUsers extends javax.swing.JFrame {
         jLabelId = new javax.swing.JLabel();
         jLabelSenha = new javax.swing.JLabel();
         jLabelConSenha = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        jTextFieldId = new javax.swing.JTextField();
+        jTextFieldNome = new javax.swing.JTextField();
+        jPasswordFieldSenha = new javax.swing.JPasswordField();
+        jPasswordFieldConSenha = new javax.swing.JPasswordField();
         jButtonSalvar = new javax.swing.JButton();
         jButtonInserir = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
@@ -73,38 +76,58 @@ public class JFrameUsers extends javax.swing.JFrame {
 
         jLabelConSenha.setText("Confirma Senha");
 
-        jTextField1.setEditable(false);
+        jTextFieldId.setEditable(false);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableUsers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.id}"), jTextField1, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableUsers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.id}"), jTextFieldId, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldIdActionPerformed(evt);
             }
         });
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableUsers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.nome}"), jTextField2, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableUsers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.nome}"), jTextFieldNome, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jTextFieldNomeActionPerformed(evt);
             }
         });
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableUsers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.senha}"), jPasswordField1, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableUsers, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.senha}"), jPasswordFieldSenha, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        jPasswordField2.setText("jPasswordField1");
+        jPasswordFieldConSenha.setText("jPasswordField1");
 
         jButtonSalvar.setText("Salvar");
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
+            }
+        });
 
         jButtonInserir.setText("Inserir");
+        jButtonInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInserirActionPerformed(evt);
+            }
+        });
 
         jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
         jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
 
         jButtonVerTarefas.setText("Ver Tarefas");
 
@@ -124,16 +147,16 @@ public class JFrameUsers extends javax.swing.JFrame {
                                     .addComponent(jLabelId))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabelConSenha)
                                     .addComponent(jLabelSenha))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPasswordField1)
-                                    .addComponent(jPasswordField2)))
+                                    .addComponent(jPasswordFieldSenha)
+                                    .addComponent(jPasswordFieldConSenha)))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jButtonInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -155,14 +178,14 @@ public class JFrameUsers extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelId, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPasswordFieldConSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabelNome, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabelConSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -180,17 +203,168 @@ public class JFrameUsers extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldIdActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jTextFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_jTextFieldNomeActionPerformed
+
+    private void jButtonInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserirActionPerformed
+        // TODO add your handling code here:
+         // Cria o objeto e insere na lista
+        Usuario usuario = new Usuario();
+        this.usuarioList.add(usuario);
+ 
+        // Seleciona objeto inserido na lista e estabelece foco
+        this.jTableUsers.setRowSelectionInterval(this.jTableUsers.getRowCount() - 1, this.jTableUsers.getRowCount() - 1);
+        this.jTextFieldNome.requestFocus();
+ 
+        //Configura botões
+        this.jButtonInserir.setEnabled(false);
+        this.jButtonExcluir.setEnabled(false);
+        this.jButtonCancelar.setEnabled(true);
+        this.jButtonSalvar.setEnabled(true);
+        this.jButtonVerTarefas.setEnabled(false);
+ 
+        this.estado = Estado.INSERINDO;
+    }//GEN-LAST:event_jButtonInserirActionPerformed
+
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (this.jPasswordFieldSenha.getText().equals(this.jPasswordFieldConSenha.getText())) {
+                // Cria e configura o objeto
+                Usuario usuario = new Usuario();
+ 
+ 
+                if (this.estado == Estado.INSERINDO) {
+ 
+                    // Atualiza o objeto
+                    usuario.setNome(this.jTextFieldNome.getText());
+                    usuario.setSenha(this.jPasswordFieldSenha.getText());
+ 
+                    if (usuario.armazenado()) { // Se armazenado objeto no BD
+ 
+                        // Retira o objeto da lista e o adiciona com o id
+                        this.usuarioList.remove(this.jTableUsers.getSelectedRow());
+                        this.usuarioList.add(usuario);
+ 
+                        // Seleciona o último da lista
+                        this.jTableUsers.setRowSelectionInterval(this.jTableUsers.getRowCount() - 1, this.jTableUsers.getRowCount() - 1);
+                        this.jButtonInserir.setEnabled(true);
+                        this.jButtonExcluir.setEnabled(this.jTableUsers.getRowCount() != 0);
+                        this.jButtonCancelar.setEnabled(false);
+                        this.jButtonSalvar.setEnabled(false);
+                        this.jButtonVerTarefas.setEnabled(this.jTableUsers.getRowCount() != 0);
+ 
+                        this.estado = Estado.CONSULTANDO;
+                    }
+                } else {
+                    // Encontra e carrega o objeto de atualização
+                    if (usuario.encontradoId(Long.valueOf(this.jTextFieldId.getText()))) {
+ 
+                        // Atualiza o objeto
+                        usuario.setNome(this.jTextFieldNome.getText());
+                        usuario.setSenha(this.jPasswordFieldSenha.getText());
+ 
+                        if (usuario.atualizado()) { // Se atualizado objeto no BD
+ 
+                            // Seleciona o último da lista
+                            this.jButtonInserir.setEnabled(true);
+                            this.jButtonExcluir.setEnabled(this.jTableUsers.getRowCount() != 0);
+                            this.jButtonCancelar.setEnabled(false);
+                            this.jButtonSalvar.setEnabled(false);
+                            this.jButtonVerTarefas.setEnabled(this.jTableUsers.getRowCount() != 0);
+ 
+                            this.estado = Estado.CONSULTANDO;
+                        }
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Confirmação de senha não coincidente");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        // TODO add your handling code here:
+         try {
+            if (this.estado == Estado.INSERINDO) {
+                this.usuarioList.remove(this.jTableUsers.getSelectedRow()); // Remove objeto inserido na lista
+                if (this.jTableUsers.getRowCount() > 0) { // Se houver objetos na lista
+                    // Seleciona o último da lista
+                    this.jTableUsers.setRowSelectionInterval(this.jTableUsers.getRowCount() - 1, this.jTableUsers.getRowCount() - 1);
+                }
+            } else {
+                Usuario usuario = new Usuario();
+                if (usuario.encontradoId(Long.valueOf(this.jTextFieldId.getText()))) {
+                    this.jTextFieldNome.setText(usuario.getNome());
+                    this.jPasswordFieldSenha.setText(usuario.getSenha());
+                }
+ 
+            }
+ 
+            //Configura botões
+            this.jButtonInserir.setEnabled(true);
+            this.jButtonExcluir.setEnabled(this.jTableUsers.getRowCount() != 0);
+            this.jButtonCancelar.setEnabled(false);
+            this.jButtonSalvar.setEnabled(false);
+            this.jButtonVerTarefas.setEnabled(this.jTableUsers.getRowCount() != 0);
+            this.estado = Estado.CONSULTANDO;
+ 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(rootPane, "Confirma a exclusão deste registro?") == JOptionPane.OK_OPTION) {
+            try {
+                Usuario usuario = new Usuario(); // Cria o objeto
+                usuario.setId(Long.valueOf(this.jTextFieldId.getText())); // Configura o id de exclusão 
+                if (usuario.desarmazenado()) { // Exclui o objeto do BD
+                    int linhaSelecionada = this.jTableUsers.getSelectedRow(); // Marca linha selecionada da tabela
+                    this.usuarioList.remove(this.jTableUsers.getSelectedRow()); // Remove objeto da lista
+                    if (this.jTableUsers.getRowCount() > 0) { // Se houver linhas na tabela
+                        if (linhaSelecionada > 0) {
+                            linhaSelecionada--;
+                        }
+                        this.jTableUsers.setRowSelectionInterval(linhaSelecionada, linhaSelecionada); // Seleciona linha marcada
+                    }
+ 
+                    //Configura botões
+                    this.jButtonInserir.setEnabled(true);
+                    this.jButtonExcluir.setEnabled(this.jTableUsers.getRowCount() != 0);
+                    this.jButtonCancelar.setEnabled(false);
+                    this.jButtonSalvar.setEnabled(false);
+                    this.jButtonVerTarefas.setEnabled(this.jTableUsers.getRowCount() != 0);
+ 
+                    this.estado = Estado.CONSULTANDO;
+ 
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, e);
+            }
+        }
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     /**
      * @param args the command line arguments
      */
+    
+    private enum Estado {
+        INSERINDO,
+        EDITANDO,
+        CONSULTANDO
+    }
+ 
+    private Estado estado = Estado.CONSULTANDO;
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -234,12 +408,12 @@ public class JFrameUsers extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelId;
     private javax.swing.JLabel jLabelNome;
     private javax.swing.JLabel jLabelSenha;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
+    private javax.swing.JPasswordField jPasswordFieldConSenha;
+    private javax.swing.JPasswordField jPasswordFieldSenha;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableUsers;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextFieldId;
+    private javax.swing.JTextField jTextFieldNome;
     private java.util.List<Controller.Usuario> usuarioList;
     private javax.persistence.Query usuarioQuery;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;

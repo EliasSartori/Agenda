@@ -5,6 +5,11 @@
  */
 package View;
 
+import Controller.Tarefa;
+import Controller.Usuario;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author gabriel
@@ -33,15 +38,15 @@ public class JFrameTarefas extends javax.swing.JFrame {
         tarefaList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : org.jdesktop.observablecollections.ObservableCollections.observableList(tarefaQuery.getResultList());
         jLabelDescricao = new javax.swing.JLabel();
         jLabelId = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldId = new javax.swing.JTextField();
+        jTextFieldDescricao = new javax.swing.JTextField();
         jButtonSalvar = new javax.swing.JButton();
         jButtonInserir = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jButtonVerTarefas = new javax.swing.JButton();
         jLabelData = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jFormattedTextFieldData = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableTarefas = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -51,58 +56,94 @@ public class JFrameTarefas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tarefas");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabelDescricao.setText("Descrição");
 
         jLabelId.setText("Id");
 
-        jTextField1.setEditable(false);
+        jTextFieldId.setEditable(false);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableTarefas, org.jdesktop.beansbinding.ELProperty.create("${selectedElement_IGNORE_ADJUSTING.id}"), jTextField1, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableTarefas, org.jdesktop.beansbinding.ELProperty.create("${selectedElement_IGNORE_ADJUSTING.id}"), jTextFieldId, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldIdActionPerformed(evt);
             }
         });
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableTarefas, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.descricao}"), jTextField2, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableTarefas, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.descricao}"), jTextFieldDescricao, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
+        jTextFieldDescricao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldDescricaoKeyPressed(evt);
+            }
+        });
+
         jButtonSalvar.setText("Salvar");
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
+            }
+        });
 
         jButtonInserir.setText("Inserir");
+        jButtonInserir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInserirActionPerformed(evt);
+            }
+        });
 
         jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
         jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
 
         jButtonVerTarefas.setText("Ver Tarefas");
 
         jLabelData.setText("Data");
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jFormattedTextFieldData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableTarefas, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.data}"), jFormattedTextField1, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jTableTarefas, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.data}"), jFormattedTextFieldData, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jFormattedTextFieldData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField1ActionPerformed(evt);
+                jFormattedTextFieldDataActionPerformed(evt);
+            }
+        });
+        jFormattedTextFieldData.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jFormattedTextFieldDataKeyPressed(evt);
             }
         });
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tarefaList, jTableTarefas);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idUsuario}"));
-        columnBinding.setColumnName("Id Usuario");
-        columnBinding.setColumnClass(Controller.Usuario.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descricao}"));
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descricao}"));
         columnBinding.setColumnName("Descricao");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${data}"));
         columnBinding.setColumnName("Data");
         columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idUsuario}"));
+        columnBinding.setColumnName("Id Usuario");
+        columnBinding.setColumnClass(Controller.Usuario.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
 
@@ -148,9 +189,9 @@ public class JFrameTarefas extends javax.swing.JFrame {
                                         .addComponent(jLabelDescricao)
                                         .addGap(18, 18, 18)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jTextFieldDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jFormattedTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
                                 .addComponent(jButtonInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -169,16 +210,16 @@ public class JFrameTarefas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelId, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelData)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFormattedTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalvar)
@@ -200,13 +241,197 @@ public class JFrameTarefas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuIUsuariosActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldIdActionPerformed
 
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+    private void jFormattedTextFieldDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDataActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+    }//GEN-LAST:event_jFormattedTextFieldDataActionPerformed
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        // TODO add your handling code here:
+        if (JOptionPane.showConfirmDialog(rootPane, "Confirma a exclusão deste registro?") == JOptionPane.OK_OPTION) {
+            try {
+                Tarefa tarefa = new Tarefa(); // Cria o objeto
+                tarefa.setId(Long.valueOf(this.jTextFieldId.getText())); // Configura o id de exclusão
+                if (tarefa.desarmazenado()) { // Exclui o objeto do BD
+                    int linhaSelecionada = this.jTableTarefas.getSelectedRow(); // Marca linha selecionada da tabela
+                    this.tarefaList.remove(this.jTableTarefas.getSelectedRow()); // Remove objeto da lista
+                    if (this.jTableTarefas.getRowCount() > 0) { // Se houver linhas na tabela
+                        if (linhaSelecionada > 0) {
+                            linhaSelecionada--;
+                        }
+                        this.jTableTarefas.setRowSelectionInterval(linhaSelecionada, linhaSelecionada); // Seleciona linha marcada
+                    }
+
+                    //Configura botões
+                    this.jButtonInserir.setEnabled(true);
+                    this.jButtonExcluir.setEnabled(this.jTableTarefas.getRowCount() != 0);
+                    this.jButtonCancelar.setEnabled(false);
+                    this.jButtonSalvar.setEnabled(false);
+
+                    this.estado = Estado.CONSULTANDO;
+
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, e);
+            }
+        }
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (this.estado == Estado.INSERINDO) {
+                this.tarefaList.remove(this.jTableTarefas.getSelectedRow()); // Remove objeto inserido na lista
+                if (this.jTableTarefas.getRowCount() > 0) { // Se houver objetos na lista
+                    // Seleciona o último da lista
+                    this.jTableTarefas.setRowSelectionInterval(this.jTableTarefas.getRowCount() - 1, this.jTableTarefas.getRowCount() - 1);
+                }
+            } else {
+                Tarefa tarefa = new Tarefa();
+                if (tarefa.encontradoId(Long.valueOf(this.jTextFieldId.getText()))) {
+                    this.jTextFieldDescricao.setText(tarefa.getDescricao());
+                    this.jFormattedTextFieldData.setText(tarefa.getData().toString());
+                }
+
+            }
+
+            //Configura botões
+            this.jButtonInserir.setEnabled(true);
+            this.jButtonExcluir.setEnabled(this.jTableTarefas.getRowCount() != 0);
+            this.jButtonCancelar.setEnabled(false);
+            this.jButtonSalvar.setEnabled(false);
+            this.estado = Estado.CONSULTANDO;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        // TODO add your handling code here:
+        try {
+
+            // Cria e configura o objeto
+            Tarefa tarefa = new Tarefa();
+
+            if (this.estado == Estado.INSERINDO) {
+
+                // Atualiza o objeto
+                tarefa.setIdUsuario(this.getUsuario());
+                tarefa.setDescricao(this.jTextFieldDescricao.getText());
+                SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+                tarefa.setData((java.util.Date) data.parse(this.jFormattedTextFieldData.getText()));
+
+                if (tarefa.armazenado()) { // Se armazenado objeto no BD
+
+                    // Retira o objeto da lista e o adiciona com o id
+                    this.tarefaList.remove(this.jTableTarefas.getSelectedRow());
+                    this.tarefaList.add(tarefa);
+
+                    // Seleciona o último da lista
+                    this.jTableTarefas.setRowSelectionInterval(this.jTableTarefas.getRowCount() - 1, this.jTableTarefas.getRowCount() - 1);
+                    this.jButtonInserir.setEnabled(true);
+                    this.jButtonExcluir.setEnabled(this.jTableTarefas.getRowCount() != 0);
+                    this.jButtonCancelar.setEnabled(false);
+                    this.jButtonSalvar.setEnabled(false);
+
+                    this.estado = Estado.CONSULTANDO;
+                }
+            } else {
+                // Encontra e carrega o objeto de atualização
+                if (tarefa.encontradoId(Long.valueOf(this.jTextFieldId.getText()))) {
+
+                    // Atualiza o objeto
+                    tarefa.setDescricao(this.jTextFieldDescricao.getText());
+                    SimpleDateFormat data = new SimpleDateFormat("dd/MM/yyyy");
+                    tarefa.setData((java.util.Date) data.parse(this.jFormattedTextFieldData.getText()));
+
+                    if (tarefa.atualizado()) { // Se atualizado objeto no BD
+
+                        // Seleciona o último da lista
+                        this.jButtonInserir.setEnabled(true);
+                        this.jButtonExcluir.setEnabled(this.jTableTarefas.getRowCount() != 0);
+                        this.jButtonCancelar.setEnabled(false);
+                        this.jButtonSalvar.setEnabled(false);
+
+                        this.estado = Estado.CONSULTANDO;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
+
+    private void jButtonInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserirActionPerformed
+        // TODO add your handling code here:
+        // Cria o objeto e insere na lista
+        Tarefa tarefa = new Tarefa();
+        this.tarefaList.add(tarefa);
+
+        // Seleciona objeto inserido na lista e estabelece foco
+        this.jTableTarefas.setRowSelectionInterval(this.jTableTarefas.getRowCount() - 1, this.jTableTarefas.getRowCount() - 1);
+        this.jTextFieldDescricao.requestFocus();
+
+        //Configura botões
+        this.jButtonInserir.setEnabled(false);
+        this.jButtonExcluir.setEnabled(false);
+        this.jButtonCancelar.setEnabled(true);
+        this.jButtonSalvar.setEnabled(true);
+
+        this.estado = Estado.INSERINDO;
+    }//GEN-LAST:event_jButtonInserirActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.setTitle(this.getTitle() + this.getUsuario().getNome());
+
+        if (this.jTableTarefas.getRowCount() > 0) { // Se houver linhas na lista
+            this.jTableTarefas.setRowSelectionInterval(0, 0); // Seleciona linha 0
+        }
+
+        // Configura botões 
+        this.jButtonInserir.setEnabled(true);
+        this.jButtonExcluir.setEnabled(this.jTableTarefas.getRowCount() != 0);
+        this.jButtonCancelar.setEnabled(false);
+        this.jButtonSalvar.setEnabled(false);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jTextFieldDescricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDescricaoKeyPressed
+        // TODO add your handling code here:
+        // Configura botões 
+        this.jButtonInserir.setEnabled(false);
+        this.jButtonExcluir.setEnabled(false);
+        this.jButtonCancelar.setEnabled(true);
+        this.jButtonSalvar.setEnabled(true);
+ 
+        if (this.estado == Estado.CONSULTANDO) {
+            if (this.jTableTarefas.getRowCount() != 0) {
+                this.estado = Estado.EDITANDO;
+            } else {
+                this.jButtonInserirActionPerformed(null);
+            }
+        }
+    }//GEN-LAST:event_jTextFieldDescricaoKeyPressed
+
+    private void jFormattedTextFieldDataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDataKeyPressed
+        // TODO add your handling code here:
+        this.jButtonInserir.setEnabled(false);
+        this.jButtonExcluir.setEnabled(false);
+        this.jButtonCancelar.setEnabled(true);
+        this.jButtonSalvar.setEnabled(true);
+ 
+        if (this.estado == Estado.CONSULTANDO) {
+            if (this.jTableTarefas.getRowCount() != 0) {
+                this.estado = Estado.EDITANDO;
+            } else {
+                this.jButtonInserirActionPerformed(null);
+            }
+        }
+    }//GEN-LAST:event_jFormattedTextFieldDataKeyPressed
 
     /**
      * @param args the command line arguments
@@ -243,6 +468,29 @@ public class JFrameTarefas extends javax.swing.JFrame {
         });
     }
 
+    public JFrameTarefas(Usuario usuario) {
+        this.setUsuario(usuario);
+        this.initComponents();
+        this.setTitle(this.getTitle() + " do usuário ");
+    }
+
+    private enum Estado {
+
+        INSERINDO,
+        EDITANDO,
+        CONSULTANDO
+    }
+    private Estado estado = Estado.CONSULTANDO;
+    private Usuario usuario;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.persistence.EntityManager AgendaPUEntityManager;
     private javax.swing.JButton jButtonCancelar;
@@ -250,7 +498,7 @@ public class JFrameTarefas extends javax.swing.JFrame {
     private javax.swing.JButton jButtonInserir;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JButton jButtonVerTarefas;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextFieldData;
     private javax.swing.JLabel jLabelData;
     private javax.swing.JLabel jLabelDescricao;
     private javax.swing.JLabel jLabelId;
@@ -260,8 +508,8 @@ public class JFrameTarefas extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuIUsuarios;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableTarefas;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextFieldDescricao;
+    private javax.swing.JTextField jTextFieldId;
     private java.util.List<Controller.Tarefa> tarefaList;
     private javax.persistence.Query tarefaQuery;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
