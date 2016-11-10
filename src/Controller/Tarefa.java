@@ -6,6 +6,8 @@
 package Controller;
 
 import DAO.TarefaJpaController;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -23,6 +25,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.swing.JOptionPane;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -39,6 +42,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Tarefa.findByData", query = "SELECT t FROM Tarefa t WHERE t.data = :data"),
     @NamedQuery(name = "Tarefa.findByDescricao", query = "SELECT t FROM Tarefa t WHERE t.descricao = :descricao")})
 public class Tarefa implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -75,7 +80,9 @@ public class Tarefa implements Serializable {
     }
 
     public void setId(Long id) {
+        Long oldId = this.id;
         this.id = id;
+        changeSupport.firePropertyChange("id", oldId, id);
     }
 
     public Date getData() {
@@ -83,7 +90,9 @@ public class Tarefa implements Serializable {
     }
 
     public void setData(Date data) {
+        Date oldData = this.data;
         this.data = data;
+        changeSupport.firePropertyChange("data", oldData, data);
     }
 
     public String getDescricao() {
@@ -91,7 +100,9 @@ public class Tarefa implements Serializable {
     }
 
     public void setDescricao(String descricao) {
+        String oldDescricao = this.descricao;
         this.descricao = descricao;
+        changeSupport.firePropertyChange("descricao", oldDescricao, descricao);
     }
 
     public Usuario getIdUsuario() {
@@ -99,7 +110,9 @@ public class Tarefa implements Serializable {
     }
 
     public void setIdUsuario(Usuario idUsuario) {
+        Usuario oldIdUsuario = this.idUsuario;
         this.idUsuario = idUsuario;
+        changeSupport.firePropertyChange("idUsuario", oldIdUsuario, idUsuario);
     }
 
     @Override
@@ -185,6 +198,14 @@ public class Tarefa implements Serializable {
             JOptionPane.showMessageDialog(null, e.getCause());
             return false;
         }
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
 
 }
