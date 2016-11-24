@@ -141,12 +141,8 @@ public class JFrameTarefas extends javax.swing.JFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${data}"));
         columnBinding.setColumnName("Data");
         columnBinding.setColumnClass(java.util.Date.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idUsuario}"));
-        columnBinding.setColumnName("Id Usuario");
-        columnBinding.setColumnClass(Controller.Usuario.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-
         jScrollPane1.setViewportView(jTableTarefas);
 
         jMenuArquivos.setText("Arquivos");

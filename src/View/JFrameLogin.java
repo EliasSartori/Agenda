@@ -149,13 +149,10 @@ public class JFrameLogin extends javax.swing.JFrame {
 
     public boolean validoLogin() {
         Usuario usuario = new Usuario();
-        this.usuario = usuario.encontradoNome("admin"); // Cria o usuário
+        this.usuario = usuario.encontradoNome("Admin"); // Cria o usuário
         if (this.usuario == null) { // Se não encontrado o usuário admin
             usuario.setNome("Admin"); // Configura o nome (não pode ser duplicado)
             usuario.setSenha("abcde"); // Configura uma senha
-            if (!usuario.armazenado()) { // Cria um usuário administrador 
-                JOptionPane.showMessageDialog(rootPane, "Não foi possível criar usuário administrador");
-            }
         }
         this.usuario = usuario.encontradoNome(this.jTextFieldLogin.getText());
         return this.jTextFieldLogin.getText().equalsIgnoreCase(this.usuario.getNome()) && this.jPasswordSenha.getText().equals(this.usuario.getSenha());
