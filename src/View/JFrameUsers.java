@@ -110,8 +110,6 @@ public class JFrameUsers extends javax.swing.JFrame {
             }
         });
 
-        jPasswordFieldConSenha.setText("jPasswordField1");
-
         jButtonSalvar.setText("Salvar");
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
