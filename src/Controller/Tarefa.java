@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import DAO.TarefaJpaController;
+import DAO.TarefaDAO;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -143,7 +143,7 @@ public class Tarefa implements Serializable {
     public boolean armazenado() {
         try {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
-            TarefaJpaController tarefaJpaController = new TarefaJpaController(emf);
+            TarefaDAO tarefaJpaController = new TarefaDAO(emf);
             tarefaJpaController.create(this);
             JOptionPane.showMessageDialog(null, "Tarefa incluida");
             return true;
@@ -156,7 +156,7 @@ public class Tarefa implements Serializable {
     public boolean atualizado() {
         try {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
-            TarefaJpaController tarefaJpaController = new TarefaJpaController(emf);
+            TarefaDAO tarefaJpaController = new TarefaDAO(emf);
             tarefaJpaController.edit(this);
             JOptionPane.showMessageDialog(null, "Tarefa atualizado");
             return true;
@@ -169,7 +169,7 @@ public class Tarefa implements Serializable {
     public boolean desarmazenado() {
         try {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
-            TarefaJpaController tarefaJpaController = new TarefaJpaController(emf);
+            TarefaDAO tarefaJpaController = new TarefaDAO(emf);
             tarefaJpaController.destroy(this.getId());
             JOptionPane.showMessageDialog(null, "Tarefa excluida");
             return true;
@@ -182,7 +182,7 @@ public class Tarefa implements Serializable {
     public boolean encontradoId(Long id) {
         try {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
-            TarefaJpaController tarefaJpaController = new TarefaJpaController(emf);
+            TarefaDAO tarefaJpaController = new TarefaDAO(emf);
             Tarefa tarefaAux = tarefaJpaController.findTarefa(id);
             if (tarefaAux != null) {
                 this.setId(tarefaAux.getId());

@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import DAO.UsuarioJpaController;
+import DAO.UsuarioDAO;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -141,7 +141,7 @@ public class Usuario implements Serializable {
     public boolean armazenado() {
         try {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
-            UsuarioJpaController usuarioJpaController = new UsuarioJpaController(emf);
+            UsuarioDAO usuarioJpaController = new UsuarioDAO(emf);
             usuarioJpaController.create(this);
             JOptionPane.showMessageDialog(null, "Usuário incluído");
             return true;
@@ -154,7 +154,7 @@ public class Usuario implements Serializable {
     public boolean atualizado() {
         try {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
-            UsuarioJpaController usuarioJpaController = new UsuarioJpaController(emf);
+            UsuarioDAO usuarioJpaController = new UsuarioDAO(emf);
             usuarioJpaController.edit(this);
             JOptionPane.showMessageDialog(null, "Usuário atualizado");
             return true;
@@ -167,7 +167,7 @@ public class Usuario implements Serializable {
     public boolean desarmazenado() {
         try {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
-            UsuarioJpaController usuarioJpaController = new UsuarioJpaController(emf);
+            UsuarioDAO usuarioJpaController = new UsuarioDAO(emf);
             usuarioJpaController.destroy(this.getId());
             JOptionPane.showMessageDialog(null, "Usuário excluído");
             return true;
@@ -180,7 +180,7 @@ public class Usuario implements Serializable {
     public boolean encontradoId(Long id) {
         try {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
-            UsuarioJpaController usuarioJpaController = new UsuarioJpaController(emf);
+            UsuarioDAO usuarioJpaController = new UsuarioDAO(emf);
             Usuario usuarioAux = usuarioJpaController.findUsuario(id);
             if (usuarioAux != null) {
                 this.setId(usuarioAux.getId());
@@ -201,7 +201,7 @@ public class Usuario implements Serializable {
     public Usuario encontradoNome(String nome) {
         try {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("AgendaPU");
-            UsuarioJpaController usuarioJpaController = new UsuarioJpaController(emf);
+            UsuarioDAO usuarioJpaController = new UsuarioDAO(emf);
             Usuario usuarioAux = (Usuario) usuarioJpaController.findNome(nome);
             if (usuarioAux != null) {
                 this.setId(usuarioAux.getId());
